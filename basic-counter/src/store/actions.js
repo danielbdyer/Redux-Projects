@@ -1,0 +1,7 @@
+export const INC_COUNTER= "INC_COUNTER"
+export const DEC_COUNTER = "DEC_COUNTER"
+export const INC_COUNTER_BY_5 = "INC_COUNTER_BY_5"
+export const DEC_COUNTER_BY_5 = "DEC_COUNTER_BY_5"
+export const ADD_COUNTER = "ADD_COUNTER"
+export const ON_SAVE_RESULT = "ON_SAVE_RESULT"
+export const ON_SAVE_NAME = "ON_SAVE_NAME"

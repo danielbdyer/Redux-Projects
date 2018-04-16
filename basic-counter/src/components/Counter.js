@@ -1,41 +1,44 @@
 import React, { Component } from 'react';
 import CounterControl from './CounterControl'
 import CounterOutput from './CounterOutput'
+import CounterResult from './CounterResult'
+
 import { connect } from 'react-redux'
+
+import * as actionTypes from '../store/actions'
 
 class Counter extends Component {
 
   constructor(props) {
     super(props)
 
-    // you can comment this out since
-    // we are not using local state
-    /*
     this.state = {
-      counter : 0
-    } */
+      name : ''
+    }
 
   }
 
-  // you can comment this out because we are not using
-  // local events/handlers
-  /*
-  incrementCounterHandler = () => {
+  onNameChangedHandler = (event) => {
 
-      this.setState({
-        counter : this.state.counter + 1
-      })
+    this.setState({
+      name : event.target.value
+    })
 
-  }*/
+  }
 
   render() {
     return (
         <div>
+          <input onChange={this.onNameChangedHandler} type="text" />
+          <button onClick={() => this.props.onSaveName(this.state.name)}>Save Name</button>
           <CounterOutput counterLabel = {this.props.ctr} />
-          <CounterControl title="increment +1" onClicked = {this.props.onIncrementCounter} />
-          <CounterControl title="decrement -1" onClicked = {this.props.onDecrementCounter} />
-          <CounterControl title="increment by +5" onClicked = {this.props.onIncrementByFiveCounter } />
-          <CounterControl title="decrement by -5" onClicked = {this.props.onDecrementByFiveCounter} />
+          <CounterControl title="increment +1" clicked = {this.props.onIncrementCounter} />
+          <CounterControl title="decrement -1" clicked  = {this.props.onDecrementCounter} />
+          <CounterControl title="increment by +5" clicked = {this.props.onIncrementByFiveCounter } />
+          <CounterControl title="decrement by -5" clicked = {this.props.onDecrementByFiveCounter} />
+          <button onClick={this.props.onSaveResult}>Save Result</button>
+          <CounterResult results = {this.props.res} />
+
         </div>
     )
   }
@@ -46,17 +49,20 @@ class Counter extends Component {
 const mapStateToProps = state => {
   return  {
     // state.counter is a global state from the redux store
-    ctr : state.counter
+    ctr : state.counter,
+    res : state.results
   }
 }
 
 // maps the global dispatches to the properties of the component
 const mapDispatchToProps = dispatch => {
   return {
-    onIncrementCounter : () => dispatch({type : "INC_COUNTER"}),
-    onDecrementCounter : () => dispatch({type : "DEC_COUNTER"}),
-    onIncrementByFiveCounter : () => dispatch({type : "INC_COUNTER_BY_5"}),
-    onDecrementByFiveCounter : () => dispatch({type : "DEC_COUNTER_BY_5"}),
+    onIncrementCounter : () => dispatch({type : actionTypes.INC_COUNTER}),
+    onDecrementCounter : () => dispatch({type : actionTypes.DEC_COUNTER}),
+    onIncrementByFiveCounter : () => dispatch({type: actionTypes.INC_COUNTER_BY_5}),
+    onDecrementByFiveCounter : () => dispatch({type: actionTypes.DEC_COUNTER_BY_5}),
+    onSaveResult : () => dispatch({type : actionTypes.ON_SAVE_RESULT}),
+    onSaveName : (name) => dispatch({type : actionTypes.ON_SAVE_NAME, value : name})
   }
 }
 // link the props and dispatches to the component

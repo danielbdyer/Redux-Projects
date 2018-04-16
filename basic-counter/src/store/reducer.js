@@ -1,43 +1,59 @@
 
+import * as actionTypes from './actions'
+
 const initialState = {
   counter : 123,
-  firstName : 'john',
-  lastName : 'Doe',
-  tasks : []
+  results : []
 }
 
 const reducer = (state = initialState,action) => {
 
-  if(action.type == "INC_COUNTER") {
-    return {
-      ...state,
-      counter : state.counter + 1
+  switch(action.type) {
+
+    case actionTypes.INC_COUNTER:
+      return {
+        ...state,
+        counter : state.counter + 1
     }
-  }
 
-  else if(action.type == "DEC_COUNTER") {
-
-    return {
-      ...state,
-      counter : state.counter - 1
+    case actionTypes.DEC_COUNTER:
+      return {
+        ...state,
+        counter : state.counter - 1
     }
-  }
 
-  else if(action.type == "INC_COUNTER_BY_5") {
-    return {
-      ...state,
-      counter: state.counter + 5
+    case actionTypes.ADD_COUNTER:
+      return {
+        ...state,
+        counter : state.counter + action.value
     }
-  }
 
-  else if(action.type == "DEC_COUNTER_BY_5") {
-    return {
-      ...state,
-      counter: state.counter - 5
-    }
-  }
+    case actionTypes.INC_COUNTER_BY_5:
+      return {
+        ...state,
+        counter : state.counter + 5
+      }
 
-  return state
+    case actionTypes.DEC_COUNTER_BY_5:
+      return {
+        ...state,
+        counter : state.counter - 5
+      }
+
+    case actionTypes.ON_SAVE_RESULT:
+      return {
+        ...state,
+        results : state.results.concat(state.counter)
+      }
+
+    case actionTypes.ON_SAVE_NAME:
+      return {
+        ...state,
+        results : state.results.concat(action.value)
+        }
+    default:
+      return state
+  }
 }
 
 export default reducer
